@@ -1,0 +1,58 @@
+# ChemNews 自动化部署与本地运行说明
+
+## 一、云端自动化（推荐，支持定时抓取邮件推送，无需本地开机）
+
+### 1. 推送代码到GitHub仓库
+- 将本项目所有文件推送到你自己的GitHub仓库。
+
+### 2. 配置邮箱信息为GitHub Secrets
+- 打开你的GitHub仓库，进入“Settings” > “Secrets and variables” > “Actions”。
+- 新建一个名为 `CHEMNEWS_CONFIG` 的Secret。
+- 将config.json的全部内容粘贴进去，例如：
+```
+{
+  "email": "你的邮箱",
+  "password": "邮箱授权码",
+  "receiver": "收件人邮箱",
+  "smtp_server": "smtp.163.com",
+  "smtp_port": 465
+}
+```
+
+### 3. 自动定时运行
+- .github/workflows/chemnews.yml 已配置好每天北京时间9点自动运行。
+- 你也可以在GitHub Actions页面手动触发。
+- 邮件将自动发送到你指定的邮箱。
+
+## 二、本地运行与定时任务
+
+### 1. 安装依赖
+- 需安装Python 3.10及以上。
+- 在项目根目录下运行：
+```
+pip install requests
+```
+
+### 2. 配置邮箱信息
+- 编辑config.json，填写你的邮箱、授权码、收件人等信息。
+
+### 3. 手动运行
+- 在项目根目录下运行：
+```
+python chemnews/main.py
+```
+
+### 4. 本地定时任务（可选）
+- VS Code已配置.vscode/tasks.json，每天9点自动运行（需电脑开机且VS Code运行）。
+- 你也可用Windows任务计划程序或Linux cron实现定时：
+  - Windows：使用“任务计划程序”添加每日9点运行的python chemnews/main.py任务。
+  - Linux/Mac：crontab -e，添加：
+    `0 9 * * * /usr/bin/python3 /你的路径/chemnews/main.py`
+
+## 三、注意事项
+- 邮箱需开启SMTP服务并获取授权码。
+- 建议优先使用云端自动化，安全且无需本地开机。
+- 若需支持更多期刊或自定义筛选，请修改chemnews/journal_crawlers.py。
+
+---
+如有疑问可联系开发者或查阅README。
