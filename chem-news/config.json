@@ -1,7 +1,8 @@
 {
-  "email": "15896897563@163.com",
+  "email": "请填写你的邮箱",                  
   "password": "请填写你的邮箱授权码",
-  "receiver": "15896897563@163.com",
-  "smtp_server": "smtp.163.com",
+  "receiver": "请填写你的邮箱",      
+  "smtp_server": "smtp.163.com",      
   "smtp_port": 465
 }
+
